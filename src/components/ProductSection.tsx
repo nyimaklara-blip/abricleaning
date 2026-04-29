@@ -7,23 +7,25 @@ import {
 import { Button } from "@/components/ui/button";
 import { useContent } from "@/context/ContentContext";
 import prodVk7Desc from "@/assets/prod-vk7-desc.png";
-import prodVk7Eb7Plant from "@/assets/prod-vk7-eb7-plant.png";
+import prodEb7Desc from "@/assets/prod-eb7-desc.jpeg";
+import prodVm7Desc from "@/assets/prod-vm7-desc.jpeg";
+import prodMf7Desc from "@/assets/prod-mf7-desc.jpeg";
 import prodSp7Desc from "@/assets/prod-sp7-desc.png";
 import prodPb7Desc from "@/assets/prod-pb7-desc.png";
 import prodVg100Desc from "@/assets/prod-vg100-desc.png";
 import prodVr7Rb7Desc from "@/assets/prod-vr7-rb7-desc.png";
 import prodHd7Desc from "@/assets/prod-hd7-desc.png";
 
-// Local fallback images keyed by product ID.
-// Used when Supabase product data doesn't carry an image field.
 const productImageFallbacks: Record<string, string> = {
   vk7: prodVk7Desc,
-  eb7: prodVk7Eb7Plant,
+  vm7: prodVm7Desc,
+  eb7: prodEb7Desc,
   sp7: prodSp7Desc,
   pb7: prodPb7Desc,
   vg100: prodVg100Desc,
   vr7rb7: prodVr7Rb7Desc,
   hd7: prodHd7Desc,
+  mf7: prodMf7Desc,
 };
 
 const ProductSection = () => {

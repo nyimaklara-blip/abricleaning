@@ -1,6 +1,8 @@
 import type { SiteContent } from "@/types/content";
 import prodVk7Desc from "@/assets/prod-vk7-desc.png";
-import prodVk7Eb7Set from "@/assets/prod-vk7-eb7-set.png";
+import prodEb7Desc from "@/assets/prod-eb7-desc.jpeg";
+import prodVm7Desc from "@/assets/prod-vm7-desc.jpeg";
+import prodMf7Desc from "@/assets/prod-mf7-desc.jpeg";
 import prodSp7Desc from "@/assets/prod-sp7-desc.png";
 import prodPb7Desc from "@/assets/prod-pb7-desc.png";
 import prodVg100Desc from "@/assets/prod-vg100-desc.png";
@@ -114,15 +116,30 @@ export const defaultContent: SiteContent = {
         image: prodVk7Desc,
       },
       {
+        id: "vm7",
+        name: "Kobold VM7 Hand-Akkusauger",
+        desc: "Immer und überall einsatzbereit – der praktische Hand-Akkusauger für die schnelle Reinigung zwischendurch.",
+        benefits: [
+          "Praktisch für die schnelle Reinigung zwischendurch",
+          "Volle Akku-Power mit 2 Saugstufen und Boost-Funktion",
+          "Angenehme Handhabung durch perfekte Gewichtsverteilung",
+          "Vergrösserbare Düse für mehr Saugfläche",
+          "Entleerung des Staubbehälters auf Knopfdruck – ohne Schmutzkontakt",
+        ],
+        image: prodVm7Desc,
+      },
+      {
         id: "eb7",
         name: "Kobold EB7 Elektrobürste",
-        desc: "Die perfekte Ergänzung für Teppiche und Polster.",
+        desc: "Schnelle und einfache Tiefenreinigung – die perfekte Ergänzung für Teppiche und Hartböden.",
         benefits: [
-          "Tiefenreinigung für Teppichböden",
-          "Entfernt Tierhaare mühelos",
-          "Einfach aufzusetzen",
+          "Automatische Erkennung von Böden",
+          "Intelligente Anpassung der Rotationsgeschwindigkeit und Saugleistung",
+          "Gründliche Entfernung von Schmutz und Staub",
+          "Staubsaugen unter niedrigen Möbeln problemlos möglich",
+          "Sanfte Reinigung von Hartböden und Teppichen",
         ],
-        image: prodVk7Eb7Set,
+        image: prodEb7Desc,
       },
       {
         id: "sp7",
@@ -182,6 +199,18 @@ export const defaultContent: SiteContent = {
           "Auch im Aussenbereich einsetzbar",
         ],
         image: prodHd7Desc,
+      },
+      {
+        id: "mf7",
+        name: "Kobold MF7 Motorschutzfilter",
+        desc: "Schütze das Herzstück deines Kobold VK7 – verlängert die Lebensdauer und sorgt für frischen Duft.",
+        benefits: [
+          "Schützt den Motor zuverlässig vor Verschmutzungen",
+          "Gibt deinem Kobold VK7-Akkusauger eine lange Lebensdauer",
+          "Leicht einzusetzen und auszuwechseln",
+          "Integrierte Halterung für airumo Duftchips – für einen angenehm frischen Duft",
+        ],
+        image: prodMf7Desc,
       },
     ],
   },
