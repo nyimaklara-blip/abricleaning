@@ -40,3 +40,4 @@ Product reviews*.jpg
 Thermomix*.jpg
 *.htm
 .gstack/
+.env*.local

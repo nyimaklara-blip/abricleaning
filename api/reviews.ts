@@ -1,9 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
-const REPO_OWNER = "nyimaklara-blip";
-const REPO_NAME = "abricleaning";
 const FILE_PATH = "public/data/reviews.json";
-const BRANCH = "master";
 
 interface Review {
   id: string;
@@ -39,6 +36,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
   const token = process.env.GITHUB_TOKEN;
+  const owner = process.env.GITHUB_OWNER || "nyimaklara-blip";
+  const repo = process.env.GITHUB_REPO || "abricleaning";
+  const branch = process.env.GITHUB_BRANCH || "master";
+
   if (!token) {
     return res.status(500).json({ error: "Server not configured (missing GITHUB_TOKEN)" });
   }
@@ -83,7 +84,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     };
 
     const fileResp = await fetch(
-      `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}?ref=${BRANCH}`,
+      `https://api.github.com/repos/${owner}/${repo}/contents/${FILE_PATH}?ref=${branch}`,
       { headers: ghHeaders }
     );
 
@@ -117,7 +118,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Commit back
     const commitResp = await fetch(
-      `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`,
+      `https://api.github.com/repos/${owner}/${repo}/contents/${FILE_PATH}`,
       {
         method: "PUT",
         headers: ghHeaders,
@@ -125,7 +126,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           message: `feat(reviews): new review from ${name}`,
           content: Buffer.from(JSON.stringify(updated, null, 2)).toString("base64"),
           sha: fileData.sha,
-          branch: BRANCH,
+          branch,
         }),
       }
     );
