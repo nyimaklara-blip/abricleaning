@@ -10,6 +10,7 @@ interface FileReview {
   rating: number;
   text: string;
   date?: string;
+  avatarUrl?: string;
 }
 
 const StarRow = ({ rating }: { rating: number }) => (
@@ -23,6 +24,36 @@ const StarRow = ({ rating }: { rating: number }) => (
   </div>
 );
 
+const formatDate = (iso?: string): string => {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return "";
+  return d.toLocaleDateString("de-CH", { day: "2-digit", month: "long", year: "numeric" });
+};
+
+const initials = (name: string): string =>
+  name
+    .split(" ")
+    .map((part) => part[0] || "")
+    .filter(Boolean)
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+
+const Avatar = ({ name, src }: { name: string; src?: string }) =>
+  src ? (
+    <img
+      src={src}
+      alt={name}
+      className="w-12 h-12 rounded-full object-cover ring-2 ring-primary/20 flex-shrink-0"
+      loading="lazy"
+    />
+  ) : (
+    <div className="w-12 h-12 rounded-full bg-primary/10 text-primary font-semibold text-sm flex items-center justify-center ring-2 ring-primary/20 flex-shrink-0">
+      {initials(name)}
+    </div>
+  );
+
 const TestimonialsSection = () => {
   const { content } = useContent();
   const { heading, subtext, testimonials } = content.testimonials;
@@ -30,7 +61,7 @@ const TestimonialsSection = () => {
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
-    fetch("/data/reviews.json")
+    fetch(`/data/reviews.json?cb=${Date.now()}`)
       .then((r) => (r.ok ? r.json() : []))
       .then((data: FileReview[]) => {
         if (Array.isArray(data)) setFileReviews(data);
@@ -49,31 +80,41 @@ const TestimonialsSection = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {/* Hardcoded testimonials from content.testimonials */}
           {testimonials.map((t) => (
             <div
               key={t.name}
               className="bg-background rounded-lg p-6 shadow-soft border border-border"
             >
-              <StarRow rating={t.rating} />
-              <p className="text-sm text-foreground/80 leading-relaxed mb-4 italic">&ldquo;{t.text}&rdquo;</p>
-              <div>
-                <p className="text-sm font-semibold text-foreground">{t.name}</p>
-                <p className="text-xs text-muted-foreground">{t.location}</p>
+              <div className="flex items-center gap-3 mb-3">
+                <Avatar name={t.name} />
+                <div>
+                  <p className="text-sm font-semibold text-foreground">{t.name}</p>
+                  <p className="text-xs text-muted-foreground">{t.location}</p>
+                </div>
               </div>
+              <StarRow rating={t.rating} />
+              <p className="text-sm text-foreground/80 leading-relaxed italic">&ldquo;{t.text}&rdquo;</p>
             </div>
           ))}
 
+          {/* Reviews from reviews.json (newest first) */}
           {fileReviews.map((r) => (
             <div
               key={r.id}
               className="bg-background rounded-lg p-6 shadow-soft border border-border"
             >
-              <StarRow rating={r.rating} />
-              <p className="text-sm text-foreground/80 leading-relaxed mb-4 italic">&ldquo;{r.text}&rdquo;</p>
-              <div>
-                <p className="text-sm font-semibold text-foreground">{r.name}</p>
-                {r.location && <p className="text-xs text-muted-foreground">{r.location}</p>}
+              <div className="flex items-center gap-3 mb-3">
+                <Avatar name={r.name} src={r.avatarUrl || undefined} />
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-foreground truncate">{r.name}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {[r.location, formatDate(r.date)].filter(Boolean).join(" • ")}
+                  </p>
+                </div>
               </div>
+              <StarRow rating={r.rating} />
+              <p className="text-sm text-foreground/80 leading-relaxed italic">&ldquo;{r.text}&rdquo;</p>
             </div>
           ))}
         </div>

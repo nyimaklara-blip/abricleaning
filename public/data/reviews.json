@@ -5,7 +5,8 @@
     "location": "Uster",
     "rating": 5,
     "text": "Christa hat sich enorm viel Zeit genommen und alles geduldig erklärt. Der SP7 ist ein Gamechanger!",
-    "date": "2024-12-15"
+    "date": "2026-04-15T10:00:00.000Z",
+    "avatarUrl": ""
   },
   {
     "id": "2",
@@ -13,7 +14,8 @@
     "location": "Wetzikon",
     "rating": 5,
     "text": "Professionell, freundlich und kompetent. Die Vorführung bei uns zu Hause war super bequem.",
-    "date": "2024-11-20"
+    "date": "2026-04-20T14:30:00.000Z",
+    "avatarUrl": ""
   },
   {
     "id": "3",
@@ -21,6 +23,7 @@
     "location": "Volketswil",
     "rating": 5,
     "text": "Ich war skeptisch, aber nach der Demo war ich überzeugt. Beste Entscheidung für unser Zuhause!",
-    "date": "2024-10-08"
+    "date": "2026-04-25T09:00:00.000Z",
+    "avatarUrl": ""
   }
 ]

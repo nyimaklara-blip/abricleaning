@@ -1,6 +1,15 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 const FILE_PATH = "public/data/reviews.json";
+const AVATAR_DIR = "public/uploads/avatars";
+
+const MAX_AVATAR_BYTES = 2 * 1024 * 1024;
+const ALLOWED_MIME = new Set(["image/jpeg", "image/png", "image/webp"]);
+const MIME_TO_EXT: Record<string, string> = {
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/webp": "webp",
+};
 
 interface Review {
   id: string;
@@ -9,10 +18,11 @@ interface Review {
   rating: number;
   text: string;
   date: string;
+  avatarUrl?: string;
 }
 
 const recentSubmissions = new Map<string, number>();
-const RATE_WINDOW_MS = 5 * 60 * 1000; // 5 min
+const RATE_WINDOW_MS = 5 * 60 * 1000;
 
 function getClientIp(req: VercelRequest): string {
   const forwarded = (req.headers["x-forwarded-for"] as string) || "";
@@ -28,8 +38,53 @@ function sanitize(input: unknown, maxLen: number): string {
     .slice(0, maxLen);
 }
 
+interface AvatarUpload {
+  buffer: Buffer;
+  ext: string;
+}
+
+function parseAvatarDataUrl(dataUrl: string): AvatarUpload | null {
+  const match = /^data:([^;]+);base64,(.+)$/.exec(dataUrl);
+  if (!match) return null;
+  const mime = match[1].toLowerCase();
+  if (!ALLOWED_MIME.has(mime)) return null;
+  const buffer = Buffer.from(match[2], "base64");
+  if (buffer.length > MAX_AVATAR_BYTES) return null;
+  return { buffer, ext: MIME_TO_EXT[mime] };
+}
+
+async function uploadAvatar(
+  ghHeaders: Record<string, string>,
+  owner: string,
+  repo: string,
+  branch: string,
+  reviewId: string,
+  avatar: AvatarUpload,
+  authorName: string
+): Promise<string | null> {
+  const filename = `${reviewId}.${avatar.ext}`;
+  const path = `${AVATAR_DIR}/${filename}`;
+
+  const resp = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+    method: "PUT",
+    headers: ghHeaders,
+    body: JSON.stringify({
+      message: `feat(reviews): avatar for ${authorName}`,
+      content: avatar.buffer.toString("base64"),
+      branch,
+    }),
+  });
+
+  if (!resp.ok) {
+    const err = await resp.text();
+    console.error("Avatar upload failed:", resp.status, err);
+    return null;
+  }
+
+  return `/uploads/avatars/${filename}`;
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // CORS — allow same-origin only by default
   res.setHeader("Content-Type", "application/json");
 
   if (req.method === "OPTIONS") return res.status(200).end();
@@ -46,12 +101,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const body = (req.body ?? {}) as Record<string, unknown>;
 
-  // Honeypot
-  if (body.website) {
-    return res.status(200).json({ ok: true, skipped: true });
-  }
+  if (body.website) return res.status(200).json({ ok: true, skipped: true });
 
-  // Validation
   const name = sanitize(body.name, 80);
   const location = sanitize(body.location, 80);
   const text = sanitize(body.text, 1000);
@@ -65,24 +116,38 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: "Bitte schreiben Sie mindestens 10 Zeichen." });
   }
 
-  // Rate limit: 1 review per IP per 5 minutes
+  // Validate avatar early if present
+  let avatar: AvatarUpload | null = null;
+  if (typeof body.avatarDataUrl === "string" && body.avatarDataUrl.length > 0) {
+    avatar = parseAvatarDataUrl(body.avatarDataUrl);
+    if (!avatar) {
+      return res
+        .status(400)
+        .json({ error: "Ungültiges Profilbild. Nur JPG/PNG/WebP, max. 2 MB." });
+    }
+  }
+
+  // Rate limit
   const ip = getClientIp(req);
   const now = Date.now();
   for (const [key, ts] of recentSubmissions.entries()) {
     if (now - ts > RATE_WINDOW_MS) recentSubmissions.delete(key);
   }
   if (recentSubmissions.has(ip)) {
-    return res.status(429).json({ error: "Bitte warten Sie ein paar Minuten, bevor Sie eine weitere Bewertung senden." });
+    return res.status(429).json({
+      error: "Bitte warten Sie ein paar Minuten, bevor Sie eine weitere Bewertung senden.",
+    });
   }
 
   try {
-    // Get current reviews.json
     const ghHeaders: Record<string, string> = {
       Authorization: `Bearer ${token}`,
       Accept: "application/vnd.github+json",
+      "Content-Type": "application/json",
       "X-GitHub-Api-Version": "2022-11-28",
     };
 
+    // Read current reviews.json
     const fileResp = await fetch(
       `https://api.github.com/repos/${owner}/${repo}/contents/${FILE_PATH}?ref=${branch}`,
       { headers: ghHeaders }
@@ -104,19 +169,31 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       reviews = [];
     }
 
-    // Build new review (newest first)
+    const reviewId = `r-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+
+    // Upload avatar first if present
+    let avatarUrl = "";
+    if (avatar) {
+      const uploaded = await uploadAvatar(ghHeaders, owner, repo, branch, reviewId, avatar, name);
+      if (!uploaded) {
+        return res.status(500).json({ error: "Konnte Profilbild nicht hochladen." });
+      }
+      avatarUrl = uploaded;
+    }
+
     const newReview: Review = {
-      id: `r-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      id: reviewId,
       name,
       location: location || undefined,
       rating,
       text,
       date: new Date().toISOString(),
+      avatarUrl: avatarUrl || undefined,
     };
 
     const updated = [newReview, ...reviews];
 
-    // Commit back
+    // Commit reviews.json
     const commitResp = await fetch(
       `https://api.github.com/repos/${owner}/${repo}/contents/${FILE_PATH}`,
       {
@@ -124,7 +201,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         headers: ghHeaders,
         body: JSON.stringify({
           message: `feat(reviews): new review from ${name}`,
-          content: Buffer.from(JSON.stringify(updated, null, 2)).toString("base64"),
+          content: Buffer.from(JSON.stringify(updated, null, 2) + "\n").toString("base64"),
           sha: fileData.sha,
           branch,
         }),
