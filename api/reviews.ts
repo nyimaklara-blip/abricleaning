@@ -215,6 +215,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     recentSubmissions.set(ip, now);
+
+    // Trigger Vercel redeploy so the new review/avatar are served from the build
+    const deployHook = process.env.VERCEL_DEPLOY_HOOK;
+    if (deployHook) {
+      try {
+        await fetch(deployHook, { method: "POST" });
+      } catch (e) {
+        console.error("Deploy hook trigger failed (review still committed):", e);
+      }
+    }
+
     return res.status(200).json({ ok: true, review: newReview });
   } catch (err) {
     console.error("Review API error:", err);
