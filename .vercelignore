@@ -1,0 +1,9 @@
+src/stage-images/
+*Zone.Identifier*
+screencapture-*.png
+Screenshot*.png
+Screenshot*.jpg
+Product reviews*.jpg
+Thermomix*.jpg
+node_modules/
+dist/
