@@ -1,5 +1,13 @@
 [
   {
+    "id": "r-1777463554168-q5o68z",
+    "name": "Test User",
+    "location": "Test",
+    "rating": 5,
+    "text": "Test review from CLI to verify the API endpoint is wired up and committing works end to end.",
+    "date": "2026-04-29T11:52:34.168Z"
+  },
+  {
     "id": "1",
     "name": "Sandra M.",
     "location": "Uster",
