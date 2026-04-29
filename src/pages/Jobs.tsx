@@ -84,8 +84,22 @@ const Jobs = () => (
         </div>
       </section>
 
+      {/* ── Highlight (moved up so it's visible while reading the hero) ── */}
+      <section className="pt-0 pb-12 md:pb-16 bg-background">
+        <div className="container-narrow px-4 md:px-8">
+          <div className="bg-primary rounded-2xl px-8 py-10 text-center text-primary-foreground shadow-lg max-w-2xl mx-auto">
+            <p className="text-sm font-semibold uppercase tracking-widest mb-3 opacity-80">
+              Das Beste
+            </p>
+            <p className="font-heading text-2xl md:text-3xl font-bold leading-snug">
+              Mit deinem Einsatz kannst du dir sogar deinen eigenen Kobold verdienen!
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* ── Benefits ─────────────────────────────────────────────── */}
-      <section className="section-padding bg-background">
+      <section className="section-padding bg-background pt-0">
         <div className="container-narrow">
           <div className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -110,20 +124,6 @@ const Jobs = () => (
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Highlight ────────────────────────────────────────────── */}
-      <section className="section-padding" style={{ background: "var(--section-gradient)" }}>
-        <div className="container-narrow">
-          <div className="bg-primary rounded-2xl px-8 py-10 text-center text-primary-foreground shadow-lg max-w-2xl mx-auto">
-            <p className="text-sm font-semibold uppercase tracking-widest mb-3 opacity-80">
-              Das Beste
-            </p>
-            <p className="font-heading text-2xl md:text-3xl font-bold leading-snug">
-              Mit deinem Einsatz kannst du dir sogar deinen eigenen Kobold verdienen!
-            </p>
           </div>
         </div>
       </section>
