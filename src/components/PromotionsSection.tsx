@@ -1,3 +1,4 @@
+import flyer11 from "@/assets/flyer-image-11.jpeg";
 import flyer4 from "@/assets/flyer-image-4.jpeg";
 import flyer5 from "@/assets/flyer-image-5.jpeg";
 import flyer7 from "@/assets/flyer-image-7.jpeg";
@@ -14,6 +15,17 @@ const PromotionsSection = () => {
         </div>
 
         <div className="flex flex-col gap-6 max-w-4xl mx-auto">
+          {/* NEW: Kobold All-In-One / Dream Team Angebot — full width */}
+          <a href="#kontakt" className="block group">
+            <div className="rounded-2xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-[1.01]">
+              <img
+                src={flyer11}
+                alt="Unser Kobold Angebot: VM7 Hand-Akkusauger gratis – 01.04. bis 17.05.2026"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+          </a>
+
           {/* VM7 — full width landscape */}
           <a href="#kontakt" className="block group">
             <div className="rounded-2xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-[1.01]">
