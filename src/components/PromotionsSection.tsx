@@ -1,6 +1,8 @@
 import flyer4 from "@/assets/flyer-image-4.jpeg";
 import flyer5 from "@/assets/flyer-image-5.jpeg";
 import flyer7 from "@/assets/flyer-image-7.jpeg";
+import flyer9 from "@/assets/flyer-image-9.jpeg";
+import flyer10 from "@/assets/flyer-image-10.jpeg";
 
 const PromotionsSection = () => {
   return (
@@ -25,7 +27,7 @@ const PromotionsSection = () => {
             </div>
           </a>
 
-          {/* Black is back + Event side by side */}
+          {/* Black is back + Black Limited Edition info side by side */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <a href="#kontakt" className="block group">
               <div className="rounded-2xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-[1.01]">
@@ -41,6 +43,28 @@ const PromotionsSection = () => {
                 <img
                   src={flyer7}
                   alt="Kobold VK7 Black Limited Edition"
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+            </a>
+          </div>
+
+          {/* Seedamm Center event + Website hint side by side */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <a href="/event" className="block group">
+              <div className="rounded-2xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-[1.01]">
+                <img
+                  src={flyer9}
+                  alt="Seedamm Center Mai 2026 – Vorwerk Kobold live testen"
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+            </a>
+            <a href="#kontakt" className="block group">
+              <div className="rounded-2xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-[1.01]">
+                <img
+                  src={flyer10}
+                  alt="Besuche meine Seite – abricleaning.com"
                   className="w-full h-auto object-cover"
                 />
               </div>
