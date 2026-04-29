@@ -53,6 +53,14 @@ function parseAvatarDataUrl(dataUrl: string): AvatarUpload | null {
   return { buffer, ext: MIME_TO_EXT[mime] };
 }
 
+async function triggerVercelDeploy(): Promise<void> {
+  // Triggers a Vercel redeploy if VERCEL_DEPLOY_HOOK is configured.
+  // Requires the project to be linked to GitHub in Vercel settings.
+  const hook = process.env.VERCEL_DEPLOY_HOOK;
+  if (!hook) return;
+  await fetch(hook, { method: "POST" });
+}
+
 async function uploadAvatar(
   ghHeaders: Record<string, string>,
   owner: string,
@@ -216,15 +224,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     recentSubmissions.set(ip, now);
 
-    // Trigger Vercel redeploy so the new review/avatar are served from the build
-    const deployHook = process.env.VERCEL_DEPLOY_HOOK;
-    if (deployHook) {
-      try {
-        await fetch(deployHook, { method: "POST" });
-      } catch (e) {
-        console.error("Deploy hook trigger failed (review still committed):", e);
-      }
-    }
+    // Trigger Vercel redeploy so the new review/avatar are picked up
+    await triggerVercelDeploy().catch((e) =>
+      console.error("Vercel redeploy trigger failed (review still committed):", e)
+    );
 
     return res.status(200).json({ ok: true, review: newReview });
   } catch (err) {
