@@ -8,7 +8,20 @@ import { useToast } from "@/hooks/use-toast";
 
 const HONEYPOT_FIELD = "website";
 
-const ReviewForm = () => {
+export interface SubmittedReview {
+  id: string;
+  name: string;
+  location?: string;
+  rating: number;
+  text: string;
+  date: string;
+}
+
+interface Props {
+  onPosted?: (review: SubmittedReview) => void;
+}
+
+const ReviewForm = ({ onPosted }: Props) => {
   const { toast } = useToast();
   const [hoveredStar, setHoveredStar] = useState(0);
   const [rating, setRating] = useState(0);
@@ -35,34 +48,37 @@ const ReviewForm = () => {
       return;
     }
 
-    const suspicious = /<|>|script|javascript:|onerror|onload/i;
-    if (suspicious.test(name) || suspicious.test(text)) {
-      toast({ title: "Ungültige Eingabe.", variant: "destructive" });
+    if (text.length < 10) {
+      toast({ title: "Bitte schreiben Sie mindestens 10 Zeichen.", variant: "destructive" });
       return;
     }
 
     setLoading(true);
 
     try {
-      const res = await fetch("https://formspree.io/f/mkopzonk", {
+      const res = await fetch("/api/reviews", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          _subject: `⭐ Neue Bewertung von ${name} (${rating} Sterne)`,
           name,
           location: data.get("location") || "",
-          rating: `${rating}/5 Sterne`,
-          review: text,
-          _type: "review",
+          rating,
+          text,
         }),
       });
+
       const result = await res.json();
-      if (!result.ok) throw new Error("send failed");
+
+      if (!res.ok || !result.ok) {
+        throw new Error(result.error || "send failed");
+      }
+
+      onPosted?.(result.review as SubmittedReview);
       setSubmitted(true);
-    } catch {
+    } catch (err) {
       toast({
         title: "Fehler beim Senden.",
-        description: "Bitte versuchen Sie es später erneut.",
+        description: err instanceof Error ? err.message : "Bitte versuchen Sie es später erneut.",
         variant: "destructive",
       });
     } finally {
@@ -73,10 +89,10 @@ const ReviewForm = () => {
   if (submitted) {
     return (
       <div className="text-center py-8 px-4">
-        <div className="text-4xl mb-3">🙏</div>
+        <div className="text-4xl mb-3">🎉</div>
         <h3 className="font-heading text-xl font-bold text-foreground mb-2">Vielen Dank!</h3>
         <p className="text-muted-foreground text-sm">
-          Ihre Bewertung wurde eingereicht und wird nach Prüfung veröffentlicht.
+          Ihre Bewertung wurde veröffentlicht.
         </p>
       </div>
     );
@@ -139,7 +155,7 @@ const ReviewForm = () => {
         </div>
 
         <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? "Wird gesendet..." : "Bewertung einreichen"}
+          {loading ? "Wird veröffentlicht..." : "Bewertung veröffentlichen"}
         </Button>
       </form>
     </div>

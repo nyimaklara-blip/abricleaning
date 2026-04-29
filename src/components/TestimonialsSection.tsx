@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Star } from "lucide-react";
 import { useContent } from "@/context/ContentContext";
-import ReviewForm from "./ReviewForm";
+import ReviewForm, { type SubmittedReview } from "./ReviewForm";
 
 interface FileReview {
   id: string;
@@ -89,7 +89,11 @@ const TestimonialsSection = () => {
             </button>
           ) : (
             <div className="mt-4 max-w-lg mx-auto">
-              <ReviewForm />
+              <ReviewForm
+                onPosted={(r: SubmittedReview) =>
+                  setFileReviews((prev) => [r, ...prev])
+                }
+              />
               <button
                 onClick={() => setShowForm(false)}
                 className="mt-3 text-sm text-muted-foreground hover:text-foreground transition-colors"
