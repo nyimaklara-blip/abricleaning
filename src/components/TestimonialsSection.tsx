@@ -1,8 +1,16 @@
 import { useState, useEffect } from "react";
 import { Star } from "lucide-react";
 import { useContent } from "@/context/ContentContext";
-import { supabase, type Review } from "@/lib/supabase";
 import ReviewForm from "./ReviewForm";
+
+interface FileReview {
+  id: string;
+  name: string;
+  location?: string;
+  rating: number;
+  text: string;
+  date?: string;
+}
 
 const StarRow = ({ rating }: { rating: number }) => (
   <div className="flex gap-1 mb-4">
@@ -18,24 +26,21 @@ const StarRow = ({ rating }: { rating: number }) => (
 const TestimonialsSection = () => {
   const { content } = useContent();
   const { heading, subtext, testimonials } = content.testimonials;
-  const [liveReviews, setLiveReviews] = useState<Review[]>([]);
+  const [fileReviews, setFileReviews] = useState<FileReview[]>([]);
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
-    supabase
-      .from("reviews")
-      .select("*")
-      .eq("approved", true)
-      .order("created_at", { ascending: false })
-      .then(({ data }) => {
-        if (data) setLiveReviews(data as Review[]);
-      });
+    fetch("/data/reviews.json")
+      .then((r) => (r.ok ? r.json() : []))
+      .then((data: FileReview[]) => {
+        if (Array.isArray(data)) setFileReviews(data);
+      })
+      .catch(() => {});
   }, []);
 
   return (
     <section id="referenzen" className="section-padding bg-card">
       <div className="container-narrow">
-        {/* Header */}
         <div className="text-center mb-12">
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
             {heading}
@@ -43,7 +48,6 @@ const TestimonialsSection = () => {
           <p className="text-muted-foreground">{subtext}</p>
         </div>
 
-        {/* Hardcoded testimonials */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {testimonials.map((t) => (
             <div
@@ -51,7 +55,7 @@ const TestimonialsSection = () => {
               className="bg-background rounded-lg p-6 shadow-soft border border-border"
             >
               <StarRow rating={t.rating} />
-              <p className="text-sm text-foreground/80 leading-relaxed mb-4 italic">"{t.text}"</p>
+              <p className="text-sm text-foreground/80 leading-relaxed mb-4 italic">&ldquo;{t.text}&rdquo;</p>
               <div>
                 <p className="text-sm font-semibold text-foreground">{t.name}</p>
                 <p className="text-xs text-muted-foreground">{t.location}</p>
@@ -59,14 +63,13 @@ const TestimonialsSection = () => {
             </div>
           ))}
 
-          {/* Live approved reviews from Supabase */}
-          {liveReviews.map((r) => (
+          {fileReviews.map((r) => (
             <div
               key={r.id}
               className="bg-background rounded-lg p-6 shadow-soft border border-border"
             >
               <StarRow rating={r.rating} />
-              <p className="text-sm text-foreground/80 leading-relaxed mb-4 italic">"{r.text}"</p>
+              <p className="text-sm text-foreground/80 leading-relaxed mb-4 italic">&ldquo;{r.text}&rdquo;</p>
               <div>
                 <p className="text-sm font-semibold text-foreground">{r.name}</p>
                 {r.location && <p className="text-xs text-muted-foreground">{r.location}</p>}
@@ -75,7 +78,6 @@ const TestimonialsSection = () => {
           ))}
         </div>
 
-        {/* CTA to write a review */}
         <div className="mt-12 text-center">
           {!showForm ? (
             <button

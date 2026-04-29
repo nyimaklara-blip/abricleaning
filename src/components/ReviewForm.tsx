@@ -5,7 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/lib/supabase";
+
+const HONEYPOT_FIELD = "website";
 
 const ReviewForm = () => {
   const { toast } = useToast();
@@ -16,29 +17,57 @@ const ReviewForm = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    if (data.get(HONEYPOT_FIELD)) return;
+
     if (rating === 0) {
       toast({ title: "Bitte wählen Sie eine Bewertung (1–5 Sterne).", variant: "destructive" });
       return;
     }
-    setLoading(true);
-    const form = e.currentTarget;
-    const data = new FormData(form);
 
-    const { error } = await supabase.from("reviews").insert({
-      name: data.get("name") as string,
-      location: data.get("location") as string,
-      rating,
-      text: data.get("text") as string,
-    });
+    const name = (data.get("name") as string || "").trim();
+    const text = (data.get("text") as string || "").trim();
 
-    setLoading(false);
-
-    if (error) {
-      toast({ title: "Fehler", description: "Ihre Bewertung konnte nicht gesendet werden.", variant: "destructive" });
+    if (!name || !text) {
+      toast({ title: "Bitte füllen Sie alle Pflichtfelder aus.", variant: "destructive" });
       return;
     }
 
-    setSubmitted(true);
+    const suspicious = /<|>|script|javascript:|onerror|onload/i;
+    if (suspicious.test(name) || suspicious.test(text)) {
+      toast({ title: "Ungültige Eingabe.", variant: "destructive" });
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const res = await fetch("https://formspree.io/f/mkopzonk", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: `⭐ Neue Bewertung von ${name} (${rating} Sterne)`,
+          name,
+          location: data.get("location") || "",
+          rating: `${rating}/5 Sterne`,
+          review: text,
+          _type: "review",
+        }),
+      });
+      const result = await res.json();
+      if (!result.ok) throw new Error("send failed");
+      setSubmitted(true);
+    } catch {
+      toast({
+        title: "Fehler beim Senden.",
+        description: "Bitte versuchen Sie es später erneut.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (submitted) {
@@ -59,7 +88,8 @@ const ReviewForm = () => {
       <p className="text-sm text-muted-foreground mb-5">Teilen Sie Ihre Erfahrung mit uns.</p>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Star rating */}
+        <input type="text" name={HONEYPOT_FIELD} style={{ display: "none" }} tabIndex={-1} autoComplete="off" />
+
         <div>
           <Label className="mb-2 block">Ihre Bewertung *</Label>
           <div className="flex gap-1">
@@ -85,7 +115,6 @@ const ReviewForm = () => {
           </div>
         </div>
 
-        {/* Name + Location */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-1">
             <Label htmlFor="review-name">Name *</Label>
@@ -97,7 +126,6 @@ const ReviewForm = () => {
           </div>
         </div>
 
-        {/* Review text */}
         <div className="space-y-1">
           <Label htmlFor="review-text">Ihre Erfahrung *</Label>
           <Textarea

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "name": "Sandra M.",
+    "location": "Uster",
+    "rating": 5,
+    "text": "Christa hat sich enorm viel Zeit genommen und alles geduldig erklärt. Der SP7 ist ein Gamechanger!",
+    "date": "2024-12-15"
+  },
+  {
+    "id": "2",
+    "name": "Thomas K.",
+    "location": "Wetzikon",
+    "rating": 5,
+    "text": "Professionell, freundlich und kompetent. Die Vorführung bei uns zu Hause war super bequem.",
+    "date": "2024-11-20"
+  },
+  {
+    "id": "3",
+    "name": "Maria L.",
+    "location": "Volketswil",
+    "rating": 5,
+    "text": "Ich war skeptisch, aber nach der Demo war ich überzeugt. Beste Entscheidung für unser Zuhause!",
+    "date": "2024-10-08"
+  }
+]
