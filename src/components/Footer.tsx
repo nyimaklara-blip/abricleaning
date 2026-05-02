@@ -74,13 +74,14 @@ const Footer = () => {
           <p className="text-xs text-card/40">
             © {new Date().getFullYear()} abricleaning. Alle Rechte vorbehalten.
             {" · "}
+            Website design by{" "}
             <a
               href="https://karamotech.ch"
               target="_blank"
               rel="noopener noreferrer"
               className="text-orange-400 hover:text-orange-300 transition-colors"
             >
-              Website design by karamotech.ch
+              karamotech.ch
             </a>
           </p>
           <div className="flex gap-4 text-xs text-card/40">
