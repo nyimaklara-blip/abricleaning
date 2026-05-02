@@ -78,7 +78,7 @@ const Footer = () => {
               href="https://karamotech.ch"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-card/70 transition-colors"
+              className="text-orange-400 hover:text-orange-300 transition-colors"
             >
               Website design by karamotech.ch
             </a>
