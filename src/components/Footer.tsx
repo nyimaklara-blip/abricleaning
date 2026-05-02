@@ -73,6 +73,15 @@ const Footer = () => {
         <div className="border-t border-card/10 mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-card/40">
             © {new Date().getFullYear()} abricleaning. Alle Rechte vorbehalten.
+            {" · "}
+            <a
+              href="https://karamotech.ch"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-card/70 transition-colors"
+            >
+              Website design by karamotech.ch
+            </a>
           </p>
           <div className="flex gap-4 text-xs text-card/40">
             <a href="#" className="hover:text-card/60 transition-colors">Datenschutz</a>
