@@ -1,5 +1,12 @@
 src/stage-images/
 stage-images/
+/*.png
+/*.jpg
+/*.jpeg
+/*.webp
+/*.pdf
+WhatsApp Chat*.txt
+src/assets/event-linth-park-2026.webp
 *Zone.Identifier*
 *New Promo.pdf
 Linth-Park 11. & 12. Juni 2026.png
