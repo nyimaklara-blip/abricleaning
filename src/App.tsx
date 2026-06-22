@@ -10,6 +10,7 @@ import Jobs from "./pages/Jobs";
 import Event from "./pages/Event";
 import BackToTop from "./components/BackToTop";
 import { ContentProvider } from "./context/ContentContext";
+import Seo from "./components/Seo";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ContentProvider>
+          <Seo />
           <BackToTop />
           <Routes>
             <Route path="/" element={<Index />} />

@@ -39,19 +39,19 @@ export const defaultContent: SiteContent = {
   },
 
   hero: {
-    headline: "Moderne Reinigung",
-    bullets: ["Einfach", "Effizient", "Komfortabel"],
+    headline: "Vorwerk Kobold Beratung Zürich & Uster",
+    bullets: ["VK7 testen", "SP7 erleben", "Zuhause vorführen"],
     subtext:
-      "Teste das modulare Reinigungssystem von Vorwerk ganz unverbindlich bei dir zu Hause.",
+      "Teste das modulare Reinigungssystem von Vorwerk ganz unverbindlich bei dir zu Hause im Raum Zürich, Uster und Zürcher Oberland.",
     ctaLabel: "Kostenlose Produktvorführung buchen",
   },
 
   about: {
-    heading: "Willkommen bei abricleaning",
+    heading: "Ihre Kobold Beraterin im Zürcher Oberland",
     body1:
-      "Mit über 10 Jahren Erfahrung als Kobold Beraterin begleite ich Sie persönlich auf dem Weg zu einer effizienten und modernen Reinigungslösung.",
+      "Mit über 10 Jahren Erfahrung als Vorwerk Kobold Beraterin begleite ich Sie persönlich auf dem Weg zu einer effizienten und modernen Reinigungslösung für Hartboden, Teppich, Polster und Matratzen.",
     body2:
-      "Ich berate Sie individuell – bei Ihnen zu Hause oder auf Wunsch im Showroom. Gemeinsam finden wir die optimale Lösung für Ihre Bedürfnisse.",
+      "Ich berate Sie individuell in Uster, Zürich, Wetzikon, Volketswil, Wallisellen und Umgebung – bei Ihnen zu Hause oder auf Wunsch im Showroom. Gemeinsam finden wir die passende Kobold Lösung für Ihre Bedürfnisse.",
     badgeName: "Christa Abrigada",
     badgeRole: "Kobold Beraterin im Zürcher Oberland",
     trustItems: [
@@ -62,50 +62,50 @@ export const defaultContent: SiteContent = {
   },
 
   why: {
-    heading: "Warum abricleaning",
-    subtext: "Vertrauen Sie auf Erfahrung, Qualität und persönlichen Service.",
+    heading: "Warum Abricleaning für Ihre Vorwerk Beratung",
+    subtext: "Lokale Erfahrung, echte Produktvorführung und persönliche Betreuung vor und nach dem Kauf.",
     benefits: [
       {
         iconName: "users",
-        title: "Persönliche Beratung",
-        desc: "Individuelle Betreuung für Ihre Bedürfnisse",
+        title: "Persönliche Kobold Beratung",
+        desc: "Individuelle Betreuung für Ihr Zuhause im Raum Zürich und Uster",
       },
       {
         iconName: "settings",
-        title: "Individuelle Lösungen",
-        desc: "Massgeschneiderte Reinigungskonzepte",
+        title: "Individuelle Reinigungslösung",
+        desc: "Passende Kobold Module für Hartboden, Teppich, Polster und Haustiere",
       },
       {
         iconName: "sparkles",
-        title: "Effiziente Reinigung",
-        desc: "Maximale Sauberkeit mit minimalem Aufwand",
+        title: "Effiziente Reinigung mit VK7",
+        desc: "Starke Saugleistung und smarte Aufsätze für den Alltag",
       },
       {
         iconName: "clock",
         title: "Zeitersparnis",
-        desc: "Mehr Zeit für die wichtigen Dinge im Leben",
+        desc: "Saugen, Wischen und Polster reinigen mit weniger Aufwand",
       },
       {
         iconName: "headphones",
         title: "Betreuung nach dem Kauf",
-        desc: "Langfristiger Support und Service",
+        desc: "Langfristiger Support, Tipps und Service durch Christa Abrigada",
       },
       {
         iconName: "lightbulb",
-        title: "Innovative Systeme",
-        desc: "Modernste Technologie von Vorwerk Schweiz AG",
+        title: "Vorwerk Schweiz Technologie",
+        desc: "VK7, SP7, PB7, VG100+ und VR7 verständlich erklärt",
       },
     ],
   },
 
   product: {
-    heading: "Unsere Kobold Produkte im Überblick",
-    subtext: "Entdecken Sie das modulare Reinigungssystem von Vorwerk Schweiz AG.",
+    heading: "Vorwerk Kobold Produkte im Überblick",
+    subtext: "Entdecken Sie VK7, SP7, PB7, VR7 und weitere Module bei einer persönlichen Vorführung.",
     products: [
       {
         id: "vk7",
         name: "Kobold VK7 Akku-Staubsauger",
-        desc: "Der kabellose Kobold Akku-Staubsauger für maximale Flexibilität auf allen Böden.",
+        desc: "Der kabellose Kobold VK7 Akku-Staubsauger für starke Saugleistung, maximale Flexibilität und gründliche Reinigung auf Hartboden und Teppich.",
         benefits: [
           "Kabellos und leicht",
           "Starke Saugleistung auf allen Böden",
@@ -144,7 +144,7 @@ export const defaultContent: SiteContent = {
       {
         id: "sp7",
         name: "Kobold SP7 Saugwischer",
-        desc: "Saugen und Wischen in einem Arbeitsgang.",
+        desc: "Der Kobold SP7 Saugwischer saugt und wischt Hartböden in einem Arbeitsgang.",
         benefits: [
           "Saugt und wischt gleichzeitig",
           "Perfekt für Hartböden",
@@ -156,7 +156,7 @@ export const defaultContent: SiteContent = {
       {
         id: "pb7",
         name: "Kobold PB7 Polsterbürste",
-        desc: "Sanfte und gründliche Reinigung aller Polstermöbel.",
+        desc: "Die Kobold PB7 Polsterbürste reinigt Sofa, Polster und Matratzen gründlich und allergikerfreundlich.",
         benefits: [
           "Schonende Tiefenreinigung",
           "Ideal für Matratzen & Sofas",
@@ -216,7 +216,7 @@ export const defaultContent: SiteContent = {
   },
 
   dreamTeam: {
-    heading: "Das Kobold Dream-Team für Ihr Zuhause",
+    heading: "Das Vorwerk Kobold Dream-Team für Ihr Zuhause",
     body: "Perfekt aufeinander abgestimmt:",
     bodyItems: [
       "Kobold VR7 Saugroboter mit der Kobold RB7 Absaugstation",
@@ -251,8 +251,8 @@ export const defaultContent: SiteContent = {
   },
 
   testimonials: {
-    heading: "Das sagen unsere Kunden",
-    subtext: "Echte Bewertungen von zufriedenen Kunden aus der Region.",
+    heading: "Kundenstimmen aus Uster, Wetzikon und Volketswil",
+    subtext: "Echte Bewertungen von zufriedenen Kunden aus Zürich und dem Zürcher Oberland.",
     testimonials: [
       {
         name: "Sandra M.",
@@ -276,9 +276,9 @@ export const defaultContent: SiteContent = {
   },
 
   bookingForm: {
-    heading: "Kostenlose Produktdemonstration anfragen",
+    heading: "Kostenlose Vorwerk Kobold Produktdemonstration anfragen",
     subtext:
-      "Kontaktieren Sie uns unverbindlich für mehr Informationen zum Kobold Reinigungssystem von Vorwerk Schweiz AG.",
+      "Kontaktieren Sie uns unverbindlich für mehr Informationen zum Kobold Reinigungssystem von Vorwerk Schweiz AG in Zürich, Uster und Umgebung.",
     fields: {
       name: { label: "Vorname / Name *", placeholder: "Ihr Name" },
       address: { label: "Adresse", placeholder: "Strasse, PLZ, Ort" },
@@ -306,7 +306,7 @@ export const defaultContent: SiteContent = {
 
   footer: {
     tagline:
-      "Ihre persönliche Kobold Beraterin in Uster & Zürcher Oberland. Moderne Reinigungslösungen für Ihr Zuhause.",
+      "Ihre persönliche Vorwerk Kobold Beraterin in Uster, Zürich & Zürcher Oberland. Moderne Reinigungslösungen für Ihr Zuhause.",
     navLabel: "Navigation",
     contactLabel: "Kontakt",
     contactName: "Christa Abrigada",

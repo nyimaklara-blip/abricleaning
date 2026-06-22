@@ -1,7 +1,24 @@
-import flyer11 from "@/assets/flyer-image-11.jpeg";
-import flyer4 from "@/assets/flyer-image-4.jpeg";
-import flyer5 from "@/assets/flyer-image-5.jpeg";
-import flyer7 from "@/assets/flyer-image-7.jpeg";
+import promoFinancing from "@/assets/promo-financing-2026.webp";
+import promoBlackEdition from "@/assets/promo-black-edition-2026.webp";
+import promoUeberbodenSet from "@/assets/promo-ueberboden-set-2026.webp";
+
+const promotions = [
+  {
+    src: promoFinancing,
+    alt: "0 Prozent Finanzierung in 6 Raten auf alle Kobold Sets vom 18.05.2026 bis 28.06.2026",
+    className: "max-w-3xl",
+  },
+  {
+    src: promoBlackEdition,
+    alt: "VK7 Black Limited Edition mit AC7 Accessoires und zweitem Akku vom 18.05.2026 bis 28.06.2026",
+    className: "max-w-4xl",
+  },
+  {
+    src: promoUeberbodenSet,
+    alt: "Kobold AC7 Accessoires Angebot vom 18.05.2026 bis 28.06.2026",
+    className: "max-w-4xl",
+  },
+];
 
 const PromotionsSection = () => {
   return (
@@ -14,50 +31,24 @@ const PromotionsSection = () => {
           <p className="text-muted-foreground">Jetzt zugreifen!</p>
         </div>
 
-        <div className="flex flex-col gap-6 max-w-4xl mx-auto">
-          {/* NEW: Kobold All-In-One / Dream Team Angebot — full width */}
-          <a href="#kontakt" className="block group">
-            <div className="rounded-2xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-[1.01]">
-              <img
-                src={flyer11}
-                alt="Unser Kobold Angebot: VM7 Hand-Akkusauger gratis – 01.04. bis 17.05.2026"
-                className="w-full h-auto object-cover"
-              />
-            </div>
-          </a>
-
-          {/* VM7 — full width landscape */}
-          <a href="#kontakt" className="block group">
-            <div className="rounded-2xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-[1.01]">
-              <img
-                src={flyer4}
-                alt="Kobold VM7 Hand-Akku Sauger gratis – 01.04. bis 17.05.2026"
-                className="w-full h-auto object-cover"
-              />
-            </div>
-          </a>
-
-          {/* Black is back + Black Limited Edition info side by side */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <a href="#kontakt" className="block group">
-              <div className="rounded-2xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-[1.01]">
+        <div className="flex flex-col items-center gap-6">
+          {promotions.map((promotion) => (
+            <a
+              key={promotion.alt}
+              href="#kontakt"
+              className={`block w-full ${promotion.className} group`}
+            >
+              <div className="overflow-hidden rounded-lg border border-border bg-background shadow-lg transition-transform duration-300 group-hover:scale-[1.01]">
                 <img
-                  src={flyer5}
-                  alt="Kobold VK7 Black Limited Edition – Auf vielfachen Wunsch zurück"
-                  className="w-full h-auto object-cover"
+                  src={promotion.src}
+                  alt={promotion.alt}
+                  className="w-full h-auto object-contain"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </a>
-            <a href="#kontakt" className="block group">
-              <div className="rounded-2xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-[1.01]">
-                <img
-                  src={flyer7}
-                  alt="Kobold VK7 Black Limited Edition"
-                  className="w-full h-auto object-cover"
-                />
-              </div>
-            </a>
-          </div>
+          ))}
         </div>
       </div>
     </section>
