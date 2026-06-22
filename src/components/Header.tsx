@@ -66,16 +66,6 @@ const Header = () => {
           >
             Jobs
           </a>
-          <a
-            href="/event"
-            className={`text-sm font-medium transition-colors ${
-              pathname === "/event"
-                ? "text-primary font-semibold"
-                : "text-foreground/70 hover:text-primary"
-            }`}
-          >
-            Event
-          </a>
         </nav>
 
         {/* CTA + Mobile Toggle */}
@@ -122,10 +112,6 @@ const Header = () => {
           <a href="/jobs" onClick={() => setMobileOpen(false)}
             className="block text-sm font-medium text-foreground/70 hover:text-primary">
             Jobs
-          </a>
-          <a href="/event" onClick={() => setMobileOpen(false)}
-            className="block text-sm font-medium text-foreground/70 hover:text-primary">
-            Event
           </a>
           <a
             href="https://wa.me/41794561875"

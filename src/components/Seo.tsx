@@ -20,12 +20,6 @@ const seoByPath: Record<string, { title: string; description: string; canonical:
       "Persönliche Thermomix Beratung und Vorführung im Raum Zürich, Uster und Zürcher Oberland. Termin unverbindlich anfragen.",
     canonical: "https://www.abricleaning.com/thermomix",
   },
-  "/event": {
-    title: "Vorwerk Kobold Events Zürich & Uster | Abricleaning",
-    description:
-      "Termine und kommende Vorwerk Kobold Events von Abricleaning in Zürich, Uster und Zürcher Oberland. Neue Veranstaltungen werden hier veröffentlicht.",
-    canonical: "https://www.abricleaning.com/event",
-  },
 };
 
 const setMeta = (selector: string, attr: "content" | "href", value: string) => {

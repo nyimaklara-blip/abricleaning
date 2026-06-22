@@ -14,7 +14,10 @@ const HeroSection = () => {
     : fallbacks;
 
   return (
-    <section id="start" className="relative h-[70vh] sm:h-[78vh] md:h-[88vh] min-h-[560px] overflow-hidden">
+    <section
+      id="start"
+      className="relative min-h-[680px] overflow-hidden sm:min-h-[720px] md:min-h-[820px]"
+    >
 
       {/* Background slides */}
       {slides.map((src, i) => (
@@ -42,21 +45,21 @@ const HeroSection = () => {
       />
 
       {/* Text content — hard left, offset down for fixed header */}
-      <div className="relative z-10 h-full flex items-center" style={{ paddingTop: "4rem" }}>
+      <div className="relative z-10 flex min-h-[680px] items-start pb-8 pt-24 sm:min-h-[720px] sm:pb-10 sm:pt-24 md:min-h-[820px]">
         <div className="w-full max-w-6xl mx-auto px-6 md:px-12 lg:px-16">
-          <div className="max-w-md lg:max-w-lg">
+          <div className="max-w-md md:max-w-xl lg:max-w-2xl">
 
             {/* Green accent bar */}
-            <div className="w-10 h-[3px] bg-primary rounded-full mb-6" />
+            <div className="mb-4 h-[3px] w-10 rounded-full bg-primary sm:mb-6" />
 
             {/* Headline */}
-            <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-semibold text-white leading-[1.05] tracking-normal mb-4">
+            <h1 className="mb-4 font-heading text-[2.6rem] font-semibold leading-[1.08] tracking-normal text-white sm:text-5xl md:text-[3.5rem] lg:text-[4rem]">
               {headline}
             </h1>
 
             {/* Bullet points */}
             {bullets && bullets.length > 0 && (
-              <ul className="mb-7 space-y-2">
+              <ul className="mb-5 space-y-1.5 sm:mb-7 sm:space-y-2">
                 {bullets.map((b) => (
                   <li key={b} className="flex items-center gap-3">
                     <span className="text-primary text-lg sm:text-2xl font-bold leading-none flex-shrink-0">•</span>
@@ -69,13 +72,13 @@ const HeroSection = () => {
             )}
 
             {/* Subtext */}
-            <p className="text-white/65 text-sm md:text-base leading-relaxed mb-8 max-w-xs">
+            <p className="mb-6 max-w-xs text-sm leading-relaxed text-white/70 sm:mb-8 md:text-base">
               {subtext}
             </p>
 
             {/* CTA */}
             <a href="#kontakt">
-              <Button size="lg" className="text-sm md:text-base px-8 h-12 shadow-lg font-semibold">
+              <Button size="lg" className="h-12 px-5 text-[13px] font-semibold shadow-lg sm:px-8 sm:text-sm md:text-base">
                 {ctaLabel}
               </Button>
             </a>
